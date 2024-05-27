@@ -1,7 +1,8 @@
 
 #' generate HMM parameters
 #'
-#' generate logit scale parameters from Uniform(-0.5, 0.5)
+#' \code{sim_hmm_paras} generates logit scale parameters of HMM with \code{K} hidden states and
+#' \code{N} distinct actions from Uniform(-0.5, 0.5).
 #'
 #' @param N number of distinct actions
 #' @param K number of hidden states
@@ -26,7 +27,8 @@ sim_hmm_paras <- function(N, K, return_prob = TRUE) {
 
 #' generate LHMM parameters
 #'
-#' The parameters are generated from Uniform(-0.5, 0.5)
+#' \code{sim_hmm_paras} generates the parameters of LHMM with \code{K} hidden states
+#' and \code{N} distinct actions from Uniform(-0.5, 0.5).
 #'
 #' @inheritParams sim_hmm_paras
 #'
@@ -46,7 +48,22 @@ sim_lhmm_paras <- function(N, K) {
 }
 
 
-
+#' Simulating action sequences using HMM
+#'
+#' \code{sim_hmm} generate \code{n} action sequences from HMM based on given parameters.
+#' The lengths of the generated sequences are simulated from a Poission distribution with
+#' mean \code{mean_len} and at least \code{min_len}.
+#'
+#' @param n number of action sequences to be generated
+#' @param paras a list containing specified HMM parameters: state-transition probability matrix (\code{P}),
+#' state-action probability matrix (\code{Q}), and initial state probability (\code{P1}).
+#' @param min_len minimum length of generated sequences
+#' @param mean_len mean length of generated sequences
+#' @param return_hidden_state logical. Whether generated hidden state sequences should be returned or not.
+#' @return \code{sim_hmm} returns a list of \code{n} generated action sequences if \code{return_hidden_state = FALSE}.
+#' If \code{return_hidden_state = TRUE}, it returns a list of two lists, \code{seqs} and \code{state_seqs}. \code{seqs} gives
+#' the generated action sequences. \code{state_seqs} gives the corresponding hidden state sequences.
+#'
 #' @export
 sim_hmm <- function(n, paras, min_len, mean_len, return_hidden_state = TRUE) {
 
@@ -81,6 +98,23 @@ sim_hmm <- function(n, paras, min_len, mean_len, return_hidden_state = TRUE) {
   out
 }
 
+#' Simulating action sequences using LHMM
+#'
+#' \code{sim_lhmm} generate \code{n} action sequences from LHMM based on given parameters.
+#' The lengths of the generated sequences are simulated from a Poission distribution with
+#' mean \code{mean_len} and at least \code{min_len}. The latent trait is generated from standard
+#' normal.
+#'
+#' @param n number of action sequences to be generated
+#' @param paras a list containing specified LHMM parameters: \code{para_a}, \code{para_b}, \code{para_alpha},
+#' \code{para_beta}, and \code{para_P1}.
+#' @param min_len minimum length of generated sequences
+#' @param mean_len mean length of generated sequences
+#' @param return_hidden_state logical. Whether generated hidden state sequences should be returned or not.
+#' @return \code{sim_hmm} returns a list of \code{n} generated action sequences if \code{return_hidden_state = FALSE}.
+#' If \code{return_hidden_state = TRUE}, it returns a list of two lists, \code{seqs} and \code{state_seqs}. \code{seqs} gives
+#' the generated action sequences. \code{state_seqs} gives the corresponding hidden state sequences.
+#'
 #' @export
 sim_lhmm <- function(n, paras, min_length, mean_len, return_hidden_state = TRUE) {
   K <- nrow(paras$para_a)
