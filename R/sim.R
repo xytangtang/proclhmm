@@ -6,7 +6,7 @@
 #'
 #' @param N number of distinct actions
 #' @param K number of hidden states
-#' @param return_prob logical. indicates to return parameters in probability scale (\code TRUE, default) or logit scale.
+#' @param return_prob logical. indicates to return parameters in probability scale (\code{TRUE}, default) or logit scale.
 #'
 #' @return a list of three elements.
 #'   If \code{return_prob = TRUE}, the element names are \code{P1}, \code{P}, and \code{Q}.

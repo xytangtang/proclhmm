@@ -11,7 +11,7 @@ sim_hmm_paras(N, K, return_prob = TRUE)
 
 \item{K}{number of hidden states}
 
-\item{return_prob}{logical. indicates to return parameters in probability scale (\code TRUE, default) or logit scale.}
+\item{return_prob}{logical. indicates to return parameters in probability scale (\code{TRUE}, default) or logit scale.}
 }
 \value{
 a list of three elements.
