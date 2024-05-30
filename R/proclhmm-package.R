@@ -1,3 +1,6 @@
+#' @keywords internal
+"_PACKAGE"
+
 #' proclhmm: Latent Hidden Markov Models for Response Process Data
 #'
 #' This package provides functions for simulating from and fitting the latent hidden
@@ -30,9 +33,9 @@
 #'
 #' Tang, X. (2024) Latent Hidden Markov Models for Response Process Data. Psychometrika 89, 205-240. <https://doi.org/10.1007/s11336-023-09938-1>
 #'
-#' @docType _PACKAGE
 #' @name proclhmm
 #' @useDynLib proclhmm, .registration = TRUE
 #' @importFrom Rcpp sourceCpp
+#' @importFrom stats optim rnorm rpois runif
 NULL
-#>NULL
+

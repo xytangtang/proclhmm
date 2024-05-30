@@ -51,7 +51,7 @@ compute_P1_lhmm <- function(para_P1) {
 # Gauss Hermite quadrature for calculating the expectation
 # of a function of multivariate normal random vector
 mgauss_hermite_quad <- function(n, mu, sigma) {
-	gh <- gauss.quad(n, kind="hermite")
+	gh <- statmod::gauss.quad(n, kind="hermite")
 	dm <- length(mu)
 	idx <- as.matrix(expand.grid(rep(list(1:n),dm)))
 	pts <- matrix(gh$nodes[idx],nrow(idx),dm)
