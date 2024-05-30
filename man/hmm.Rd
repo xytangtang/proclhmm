@@ -9,11 +9,9 @@ hmm(action_seqs, action_set, K, paras, ...)
 \arguments{
 \item{action_seqs}{a list of \code{n} action sequences}
 
-\item{action_set}{set of possible actions; if \code{NULL}, derived as the set of distinct actions from \code{action_seqs}}
-
 \item{K}{number of hidden states}
 
-\item{paras}{a list of elements named \code{para_a}, \code{para_b}, \code{para_alpha}, \code{para_beta}, and \code{para_P1},
+\item{paras}{a list of elements named \code{para_P1}, \code{para_P}, and \code{para_Q},
 providing initial values of model parameters}
 
 \item{...}{additional arguments passed to \code{\link{optim}}}

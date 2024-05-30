@@ -22,6 +22,10 @@
 #'   \item \code{\link{find_state_seq}} compute the most likely hidden state sequence.
 #' }
 #'
+#' @section Acknowledgment:
+#' The development of this package is supported by National Science Foundation
+#' grant DMS-2310664.
+#'
 #' @section References:
 #'
 #' Tang, X. (2024) Latent Hidden Markov Models for Response Process Data. Psychometrika 89, 205-240. <https://doi.org/10.1007/s11336-023-09938-1>

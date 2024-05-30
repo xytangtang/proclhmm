@@ -4,7 +4,7 @@
 \alias{sim_hmm}
 \title{Simulating action sequences using HMM}
 \usage{
-sim_hmm(n, paras, min_len, mean_len, return_hidden_state = TRUE)
+sim_hmm(n, paras, min_len, mean_len, return_state = TRUE)
 }
 \arguments{
 \item{n}{number of action sequences to be generated}
@@ -16,11 +16,11 @@ state-action probability matrix (\code{Q}), and initial state probability (\code
 
 \item{mean_len}{mean length of generated sequences}
 
-\item{return_hidden_state}{logical. Whether generated hidden state sequences should be returned or not.}
+\item{return_state}{logical. Whether generated hidden state sequences should be returned or not.}
 }
 \value{
-\code{sim_hmm} returns a list of \code{n} generated action sequences if \code{return_hidden_state = FALSE}.
-If \code{return_hidden_state = TRUE}, it returns a list of two lists, \code{seqs} and \code{state_seqs}. \code{seqs} gives
+\code{sim_hmm} returns a list of \code{n} generated action sequences if \code{return_state = FALSE}.
+If \code{return_state = TRUE}, it returns a list of two lists, \code{seqs} and \code{state_seqs}. \code{seqs} gives
 the generated action sequences. \code{state_seqs} gives the corresponding hidden state sequences.
 }
 \description{

@@ -1,22 +1,22 @@
 rehmm_obj_fun <- function(paras, Y, N, K, quad_out) {
 
   para_mat <- inflate_paras_rehmm(paras, N, K)
-  para_P1 <- para_mat$P1
-  para_a <- para_mat$a
-  para_b <- para_mat$b
-  para_alpha <- para_mat$alpha
-  para_beta <- para_mat$beta
+  para_P1 <- para_mat$para_P1
+  para_a <- para_mat$para_a
+  para_b <- para_mat$para_b
+  para_alpha <- para_mat$para_alpha
+  para_beta <- para_mat$para_beta
 
   -compute_llh_rehmm(Y, para_a, para_b, para_alpha, para_beta, para_P1, quad_out$nodes, quad_out$weights)
 }
 
 rehmm_gr_fun <- function(paras, Y, N, K, quad_out) {
   para_mat <- inflate_paras_rehmm(paras, N, K)
-  para_P1 <- para_mat$P1
-  para_a <- para_mat$a
-  para_b <- para_mat$b
-  para_alpha <- para_mat$alpha
-  para_beta <- para_mat$beta
+  para_P1 <- para_mat$para_P1
+  para_a <- para_mat$para_a
+  para_b <- para_mat$para_b
+  para_alpha <- para_mat$para_alpha
+  para_beta <- para_mat$para_beta
 
   n <- length(Y)
   para_a_gr <- matrix(0, K, K-1)
@@ -91,7 +91,6 @@ compute_theta <- function(int_seqs, para_a, para_b, para_alpha, para_beta, para_
 #'
 #'
 #' @param action_seqs a list of \code{n} action sequences
-#' @param action_set set of possible actions; if \code{NULL}, derived as the set of distinct actions from \code{action_seqs}
 #' @param K number of hidden states
 #' @param paras a list of elements named \code{para_a}, \code{para_b}, \code{para_alpha}, \code{para_beta}, and \code{para_P1},
 #'   providing initial values of model parameters
@@ -122,16 +121,13 @@ compute_theta <- function(int_seqs, para_a, para_b, para_alpha, para_beta, para_
 #' @export
 #'
 
-lhmm <- function(action_seqs, action_set, K, paras, n_pts, ...) {
+lhmm <- function(action_seqs, K, paras, n_pts = 500, ...) {
 
   n <- length(action_seqs) # sample size
 
   # create action set
-  if (is.null(action_set)) {
-    action_set <- unique(unlist(action_seqs))
-  }else {
-    # print warning messages if provided non-null action_set does not match action_seqs
-  }
+  action_set <- unique(unlist(action_seqs))
+
   N <- length(action_set)
   action2id <- 1:N
   names(action2id) <- action_set
@@ -159,10 +155,19 @@ lhmm <- function(action_seqs, action_set, K, paras, n_pts, ...) {
 
   # optimized parameter values
   opt_paras_rehmm <- inflate_paras_rehmm(opt_res_rehmm$par, N, K)
+  rownames(opt_paras_rehmm$para_a) <- paste0("state", 1:K)
+  rownames(opt_paras_rehmm$para_b) <- paste0("state", 1:K)
+  rownames(opt_paras_rehmm$para_alpha) <- paste0("state", 1:K)
+  rownames(opt_paras_rehmm$para_beta) <- paste0("state", 1:K)
+  names(opt_paras_rehmm$para_P1) <- paste0("state", 2:K)
+  colnames(opt_paras_rehmm$para_a) <- paste0("state", 2:K)
+  colnames(opt_paras_rehmm$para_b) <- paste0("state", 2:K)
+  colnames(opt_paras_rehmm$para_alpha) <- action_set[-1]
+  colnames(opt_paras_rehmm$para_beta) <- action_set[-1]
 
   # compute MAE of theta
   cat("Computing theta...\n")
-  theta_est <- compute_theta(int_seqs, opt_paras_rehmm$a, opt_paras_rehmm$b, opt_paras_rehmm$alpha, opt_paras_rehmm$beta, opt_paras_rehmm$P1, n_pts)
+  theta_est <- compute_theta(int_seqs, opt_paras_rehmm$para_a, opt_paras_rehmm$para_b, opt_paras_rehmm$para_alpha, opt_paras_rehmm$para_beta, opt_paras_rehmm$para_P1, n_pts)
 
   out <- list(seqs = int_seqs, K = K, N = N,
               paras_init = inflate_paras_rehmm(paras_init_rehmm, N, K),

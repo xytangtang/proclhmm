@@ -1,6 +1,6 @@
 hmm_obj_fun <- function(paras, seqs, n, N, K) {
   para_list <- inflate_paras_hmm(paras, N, K)
-  para_list <- compute_paras_hmm(para_list$P, para_list$Q, para_list$P1)
+  para_list <- compute_paras_hmm(para_list$para_P, para_list$para_Q, para_list$para_P1)
   P <- para_list$P
   Q <- para_list$Q
   P1 <- para_list$P1
@@ -14,7 +14,7 @@ hmm_obj_fun <- function(paras, seqs, n, N, K) {
 hmm_gr_fun <- function(paras, seqs, n, N, K) {
 
   para_list <- inflate_paras_hmm(paras, N, K)
-  para_list <- compute_paras_hmm(para_list$P, para_list$Q, para_list$P1)
+  para_list <- compute_paras_hmm(para_list$para_P, para_list$para_Q, para_list$para_P1)
   P <- para_list$P
   Q <- para_list$Q
   P1 <- para_list$P1
@@ -39,6 +39,8 @@ hmm_gr_fun <- function(paras, seqs, n, N, K) {
 
 #'
 #' @inheritParams lhmm
+#' @param paras a list of elements named \code{para_P1}, \code{para_P}, and \code{para_Q},
+#'   providing initial values of model parameters
 #'
 #' @return a list containing the following elements
 #' \tabular{ll}{
@@ -89,7 +91,7 @@ hmm <- function(action_seqs, action_set, K, paras, ...) {
   opt_res_hmm <- optim(paras_vec, fn = hmm_obj_fun, gr = hmm_gr_fun, seqs = int_seqs, N = N, K = K, n = n, method="BFGS", ...)
 
   opt_paras_raw_hmm <- inflate_paras_hmm(opt_res_hmm$par, N, K)
-  opt_paras_hmm <- compute_paras_hmm(opt_paras_raw_hmm$P, opt_paras_raw_hmm$Q, opt_paras_raw_hmm$P1)
+  opt_paras_hmm <- compute_paras_hmm(opt_paras_raw_hmm$para_P, opt_paras_raw_hmm$para_Q, opt_paras_raw_hmm$para_P1)
   obj_val_opt_hmm <- opt_res_hmm$val
 
   out <- list(seqs = int_seqs, K = K, N = N,

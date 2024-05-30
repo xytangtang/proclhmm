@@ -59,13 +59,13 @@ sim_lhmm_paras <- function(N, K) {
 #' state-action probability matrix (\code{Q}), and initial state probability (\code{P1}).
 #' @param min_len minimum length of generated sequences
 #' @param mean_len mean length of generated sequences
-#' @param return_hidden_state logical. Whether generated hidden state sequences should be returned or not.
-#' @return \code{sim_hmm} returns a list of \code{n} generated action sequences if \code{return_hidden_state = FALSE}.
-#' If \code{return_hidden_state = TRUE}, it returns a list of two lists, \code{seqs} and \code{state_seqs}. \code{seqs} gives
+#' @param return_state logical. Whether generated hidden state sequences should be returned or not.
+#' @return \code{sim_hmm} returns a list of \code{n} generated action sequences if \code{return_state = FALSE}.
+#' If \code{return_state = TRUE}, it returns a list of two lists, \code{seqs} and \code{state_seqs}. \code{seqs} gives
 #' the generated action sequences. \code{state_seqs} gives the corresponding hidden state sequences.
 #'
 #' @export
-sim_hmm <- function(n, paras, min_len, mean_len, return_hidden_state = TRUE) {
+sim_hmm <- function(n, paras, min_len, mean_len, return_state = TRUE) {
 
   K <- nrow(paras$P)
   N <- ncol(paras$Q)
@@ -110,13 +110,19 @@ sim_hmm <- function(n, paras, min_len, mean_len, return_hidden_state = TRUE) {
 #' \code{para_beta}, and \code{para_P1}.
 #' @param min_len minimum length of generated sequences
 #' @param mean_len mean length of generated sequences
-#' @param return_hidden_state logical. Whether generated hidden state sequences should be returned or not.
-#' @return \code{sim_hmm} returns a list of \code{n} generated action sequences if \code{return_hidden_state = FALSE}.
-#' If \code{return_hidden_state = TRUE}, it returns a list of two lists, \code{seqs} and \code{state_seqs}. \code{seqs} gives
-#' the generated action sequences. \code{state_seqs} gives the corresponding hidden state sequences.
+#' @param return_state logical. Whether generated hidden state sequences should be returned or not.
+#' @return If \code{return_state = TRUE}, \code{sim_hmm} returns a list of three elements
+#' \tabular{ll}{
+#' \code{seqs} \tab a list of \code{n} generated action sequences \cr
+#' \tab \cr
+#' \code{theta} \tab latent traits as a vector of length \code{n} \cr
+#' \tab \cr
+#' \code{state_seqs} \tab a list of \code{n} hidden state sequences
+#' }
+#' If \code{return_state = FALSE}, the returned list only contains \code{seqs} and \code{theta}.
 #'
 #' @export
-sim_lhmm <- function(n, paras, min_length, mean_len, return_hidden_state = TRUE) {
+sim_lhmm <- function(n, paras, min_len, mean_len, return_state = TRUE) {
   K <- nrow(paras$para_a)
   N <- ncol(paras$para_alpha) + 1
 
@@ -145,8 +151,8 @@ sim_lhmm <- function(n, paras, min_length, mean_len, return_hidden_state = TRUE)
     state_seqs[[i]] <- state_seq
   }
 
-  out <- seqs
-  if (return_state) out <- list(seqs = seqs, state_seqs = state_seqs)
+  out <- list(seqs = seqs, theta = theta)
+  if (return_state) out <- list(seqs = seqs, theta = theta, state_seqs = state_seqs)
 
   out
 

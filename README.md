@@ -1,51 +1,83 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# proclhmm
+# proclhmm: Latent Hidden Markov Model for Process Data
 
 <!-- badges: start -->
 
 <!-- badges: end -->
 
-The goal of proclhmm is to …
+This package provides functions for simulating from and fitting the
+latent hidden Markov models for response process data
+([Tang, 2024](https://doi.org/10.1007/s11336-023-09938-1)). It also
+includes functions for simulating from and fitting ordinary hidden
+Markov models.
 
 ## Installation
 
-You can install the development version of proclhmm like so:
+You can install the development version of `proclhmm` from GitHub with
 
 ``` r
-# FILL THIS IN! HOW CAN PEOPLE INSTALL YOUR DEV PACKAGE?
+devtools::install_github("xytangtang/proclhmm")
 ```
 
-## Example
+## Basic Usage
 
-This is a basic example which shows you how to solve a common problem:
+### Simulate Parameters and Data
 
 ``` r
 library(proclhmm)
-## basic example code
+N <- 10 # number of actions
+K <- 3 # number of hidden states
+
+# generate parameters
+set.seed(12345)
+paras_true <- sim_lhmm_paras(N, K)
+
+n <- 100 # sample size
+# generate data
+data0 <- sim_lhmm(n, paras_true, min_len = 4, mean_len = 25)
+action_seqs <- data0$seqs # action sequences
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
+### Estimating parameters and latent traits
 
 ``` r
-summary(cars)
-#>      speed           dist       
-#>  Min.   : 4.0   Min.   :  2.00  
-#>  1st Qu.:12.0   1st Qu.: 26.00  
-#>  Median :15.0   Median : 36.00  
-#>  Mean   :15.4   Mean   : 42.98  
-#>  3rd Qu.:19.0   3rd Qu.: 56.00  
-#>  Max.   :25.0   Max.   :120.00
+# generate initial values of parameters
+paras_init <- sim_lhmm_paras(N, K)
+# model fitting
+lhmm_res <- lhmm(action_seqs, K, paras_init)
+#> Optimizing obj fun...
+#> Computing theta...
+# estimated discrimation parameters for state transition probability matrix
+lhmm_res$paras_est$para_a
+#>            state2       state3
+#> state1 -0.6088158 -15.52584332
+#> state2 -2.3456255  -2.83225548
+#> state3 -4.5802817   0.08433227
+# estimated location parameters for state-action probability matrix
+lhmm_res$paras_est$para_beta
+#>                 4          0          5         9         6         7
+#> state1 -0.9987221  4.4206005  2.3740381 -1.472788 -6.503268  4.059780
+#> state2  0.5821316 -1.4579551  0.5479029  1.214155  1.044911  0.736849
+#> state3 -3.2111616 -0.5614971 -0.3598079 -6.618605 -4.027255 -1.426849
+#>                  1          2         8
+#> state1  3.24121223  4.1195709 -5.666249
+#> state2 -0.32826612  0.2443809 -8.464710
+#> state3 -0.05355758 -1.0904959 -9.719579
 ```
 
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date. `devtools::build_readme()` is handy for this.
+### Most likely hidden state sequences
 
-You can also embed plots, for example:
-
-<img src="man/figures/README-pressure-1.png" width="100%" />
-
-In that case, don’t forget to commit and push the resulting figure
-files, so they display on GitHub and CRAN.
+``` r
+# compute state-transition and state-action probability matrix for the first action sequnece
+paras_est <- lhmm_res$paras_est
+paras_PQ <- compute_PQ_lhmm(lhmm_res$theta_est[1], paras_est$para_a, paras_est$para_b, paras_est$para_alpha, paras_est$para_beta)
+P <- paras_PQ$P
+Q <- paras_PQ$Q
+# compute initial state probability
+P1 <- compute_P1_lhmm(paras_est$para_P1)
+# find the most likely hidden state sequences for the first action sequence
+find_state_seq(action_seqs[[1]], P1, P, Q)
+#>  [1] 2 1 2 1 2 1 1 2 1 2 1 1 2 1 1 2 1 2 1 2 1 2 1 1 2 1
+```

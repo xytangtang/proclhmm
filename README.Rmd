@@ -13,42 +13,64 @@ knitr::opts_chunk$set(
 )
 ```
 
-# proclhmm
+# proclhmm: Latent Hidden Markov Model for Process Data
 
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of proclhmm is to ...
+This package provides functions for simulating from and fitting the latent hidden Markov models for response process data ([Tang, 2024](https://doi.org/10.1007/s11336-023-09938-1)).
+It also includes functions for simulating from and fitting ordinary hidden Markov models.
 
 ## Installation
 
-You can install the development version of proclhmm like so:
+You can install the development version of `proclhmm` from GitHub with
 
-``` r
-# FILL THIS IN! HOW CAN PEOPLE INSTALL YOUR DEV PACKAGE?
+``` {r eval=FALSE}
+devtools::install_github("xytangtang/proclhmm")
 ```
 
-## Example
+## Basic Usage
 
-This is a basic example which shows you how to solve a common problem:
+### Simulate Parameters and Data
 
-```{r example}
+```{r sim}
 library(proclhmm)
-## basic example code
+N <- 10 # number of actions
+K <- 3 # number of hidden states
+
+# generate parameters
+set.seed(12345)
+paras_true <- sim_lhmm_paras(N, K)
+
+n <- 100 # sample size
+# generate data
+data0 <- sim_lhmm(n, paras_true, min_len = 4, mean_len = 25)
+action_seqs <- data0$seqs # action sequences
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
 
-```{r cars}
-summary(cars)
+### Estimating parameters and latent traits
+```{r est}
+# generate initial values of parameters
+paras_init <- sim_lhmm_paras(N, K)
+# model fitting
+lhmm_res <- lhmm(action_seqs, K, paras_init)
+# estimated discrimation parameters for state transition probability matrix
+lhmm_res$paras_est$para_a
+# estimated location parameters for state-action probability matrix
+lhmm_res$paras_est$para_beta
 ```
 
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this.
-
-You can also embed plots, for example:
-
-```{r pressure, echo = FALSE}
-plot(pressure)
+### Most likely hidden state sequences
+```{r hidden_state}
+# compute state-transition and state-action probability matrix for the first action sequnece
+paras_est <- lhmm_res$paras_est
+paras_PQ <- compute_PQ_lhmm(lhmm_res$theta_est[1], paras_est$para_a, paras_est$para_b, paras_est$para_alpha, paras_est$para_beta)
+P <- paras_PQ$P
+Q <- paras_PQ$Q
+# compute initial state probability
+P1 <- compute_P1_lhmm(paras_est$para_P1)
+# find the most likely hidden state sequences for the first action sequence
+find_state_seq(action_seqs[[1]], P1, P, Q)
 ```
 
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.

@@ -4,12 +4,10 @@
 \alias{lhmm}
 \title{MMLE of LHMM}
 \usage{
-lhmm(action_seqs, action_set, K, paras, n_pts, ...)
+lhmm(action_seqs, K, paras, n_pts = 500, ...)
 }
 \arguments{
 \item{action_seqs}{a list of \code{n} action sequences}
-
-\item{action_set}{set of possible actions; if \code{NULL}, derived as the set of distinct actions from \code{action_seqs}}
 
 \item{K}{number of hidden states}
 

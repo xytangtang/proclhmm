@@ -31,6 +31,12 @@ through marginalized maximum likelihood estimation.
 }
 }
 
+\section{Acknowledgment}{
+
+The development of this package is supported by National Science Foundation
+grant DMS-2310664.
+}
+
 \section{References}{
 
 

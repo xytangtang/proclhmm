@@ -69,7 +69,7 @@ inflate_paras_rehmm <- function(paras, N, K) {
 	para_beta <- matrix(paras[2*K*(K-1) + K*(N-1) + 1:(K*(N-1))], K, N-1)
 	para_P1 <- matrix(paras[2*K*(K-1) + 2*K*(N-1) + 1:(K-1)])
 
-	list(a = para_a, b = para_b, alpha = para_alpha, beta = para_beta, P1 = para_P1)
+	list(para_a = para_a, para_b = para_b, para_alpha = para_alpha, para_beta = para_beta, para_P1 = para_P1)
 }
 
 deflate_paras_rehmm <- function(para_a, para_b, para_alpha, para_beta, para_P1) {
@@ -117,7 +117,7 @@ inflate_paras_hmm <- function(paras, N, K) {
 	para_Q <- matrix(paras[K*(K-1) + 1:(K*(N-1))], K, N-1)
 	para_P1 <- paras[K*(K-1) + K*(N-1) + 1:(K-1)]
 
-	list(P = para_P, Q = para_Q, P1 = para_P1)
+	list(para_P = para_P, para_Q = para_Q, para_P1 = para_P1)
 }
 
 
