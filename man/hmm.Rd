@@ -4,7 +4,7 @@
 \alias{hmm}
 \title{MMLE of HMM}
 \usage{
-hmm(action_seqs, action_set, K, paras, ...)
+hmm(action_seqs, K, paras, ...)
 }
 \arguments{
 \item{action_seqs}{a list of \code{n} action sequences}

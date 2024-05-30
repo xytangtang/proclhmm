@@ -63,15 +63,12 @@ hmm_gr_fun <- function(paras, seqs, n, N, K) {
 #'
 #' @export
 
-hmm <- function(action_seqs, action_set, K, paras, ...) {
+hmm <- function(action_seqs, K, paras, ...) {
   n <- length(action_seqs) # sample size
 
   # create action set
-  if (is.null(action_set)) {
-    action_set <- unique(unlist(action_seqs))
-  }else {
-    # print warning messages if provided non-null action_set does not match action_seqs
-  }
+  action_set <- unique(unlist(action_seqs))
+
   N <- length(action_set)
   action2id <- 1:N
   names(action2id) <- action_set
@@ -93,6 +90,10 @@ hmm <- function(action_seqs, action_set, K, paras, ...) {
   opt_paras_raw_hmm <- inflate_paras_hmm(opt_res_hmm$par, N, K)
   opt_paras_hmm <- compute_paras_hmm(opt_paras_raw_hmm$para_P, opt_paras_raw_hmm$para_Q, opt_paras_raw_hmm$para_P1)
   obj_val_opt_hmm <- opt_res_hmm$val
+
+  colnames(opt_paras_hmm$P) <- rownames(opt_paras_hmm$P) <- paste0("state", 1:K)
+  rownames(opt_paras_hmm$Q) <- paste0("state", 1:K)
+  colnames(opt_paras_hmm$Q) <- action_set
 
   out <- list(seqs = int_seqs, K = K, N = N,
               paras_init = paras_init_hmm,
