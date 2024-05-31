@@ -7,9 +7,11 @@
 #' @inheritParams compute_theta
 #'
 #' @return A list of two elements
-#' \itemize{
-#'   \item {\code{P}} {\code{K} by \code{K} state-transition probability matrix}
-#'   \item {\code{Q}} {\code{K} by \code{N} state-action probability matrix}
+#' \tabular{ll}{
+#'   {\code{P}} \tab {\code{K} by \code{K} state-transition probability matrix} \cr
+#'   \tab \cr
+#'   {\code{Q}} \tab {\code{K} by \code{N} state-action probability matrix} \cr
+#'   \tab \cr
 #' }
 #' @seealso \code{\link{compute_P1_lhmm}} for initial state probabilities of
 #'   LHMM, \code{\link{compute_paras_hmm}} for computing probabilities in HMM.
@@ -83,10 +85,13 @@ deflate_paras_rehmm <- function(para_a, para_b, para_alpha, para_beta, para_P1) 
 #' @param para_Q \code{K} by \code{N-1} matrix. parameters of state-action (emission) probability matrix
 #' @param para_P1 \code{K-1} vector. parameters of initial state probability distribution
 #' @return a list of three elements:
-#' \itemize{
-#'   \item {\code{P}} {\code{K} by \code{K} state-transition probability matrix}
-#'   \item {\code{Q}} {\code{K} by \code{N} state-action (emission) probability matrix}
-#'   \item {\code{P1}} {initial state probability vector of length \code{K}}
+#' \tabular{ll}{
+#'   {\code{P}} \tab {\code{K} by \code{K} state-transition probability matrix} \cr
+#'   \tab \cr
+#'   {\code{Q}} \tab {\code{K} by \code{N} state-action (emission) probability matrix} \cr
+#'   \tab \cr
+#'   {\code{P1}} \tab {initial state probability vector of length \code{K}} \cr
+#'   \tab \cr
 #' }
 #' @seealso \code{\link{compute_PQ_lhmm}}, \code{\link{compute_P1_lhmm}} for computing probabilities in LHMM
 #' @export

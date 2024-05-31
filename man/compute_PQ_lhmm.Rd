@@ -19,9 +19,11 @@ compute_PQ_lhmm(theta, para_a, para_b, para_alpha, para_beta)
 }
 \value{
 A list of two elements
-\itemize{
-\item {\code{P}} {\code{K} by \code{K} state-transition probability matrix}
-\item {\code{Q}} {\code{K} by \code{N} state-action probability matrix}
+\tabular{ll}{
+{\code{P}} \tab {\code{K} by \code{K} state-transition probability matrix} \cr
+\tab \cr
+{\code{Q}} \tab {\code{K} by \code{N} state-action probability matrix} \cr
+\tab \cr
 }
 }
 \description{

@@ -31,7 +31,7 @@
 #'
 #' @section References:
 #'
-#' Tang, X. (2024) Latent Hidden Markov Models for Response Process Data. Psychometrika 89, 205-240. <https://doi.org/10.1007/s11336-023-09938-1>
+#' Tang, X. (2024) Latent Hidden Markov Models for Response Process Data. Psychometrika 89, 205-240. \doi{10.1007/s11336-023-09938-1}
 #'
 #' @name proclhmm
 #' @useDynLib proclhmm, .registration = TRUE

@@ -15,10 +15,13 @@ compute_paras_hmm(para_P, para_Q, para_P1)
 }
 \value{
 a list of three elements:
-\itemize{
-\item {\code{P}} {\code{K} by \code{K} state-transition probability matrix}
-\item {\code{Q}} {\code{K} by \code{N} state-action (emission) probability matrix}
-\item {\code{P1}} {initial state probability vector of length \code{K}}
+\tabular{ll}{
+{\code{P}} \tab {\code{K} by \code{K} state-transition probability matrix} \cr
+\tab \cr
+{\code{Q}} \tab {\code{K} by \code{N} state-action (emission) probability matrix} \cr
+\tab \cr
+{\code{P1}} \tab {initial state probability vector of length \code{K}} \cr
+\tab \cr
 }
 }
 \description{

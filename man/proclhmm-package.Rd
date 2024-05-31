@@ -5,7 +5,7 @@
 \alias{proclhmm-package}
 \title{proclhmm: Latent Hidden Markov Models for Response Process Data}
 \description{
-This package provides functions for simulating from and fitting the latent hidden Markov models for response process data (Tang, 2024) \doi{10.1007/s11336-023-09938-1}. It also includes functions for simulating from and fitting ordinary hidden Markov models.
+Provides functions for simulating from and fitting the latent hidden Markov models for response process data (Tang, 2024) \doi{10.1007/s11336-023-09938-1}. It also includes functions for simulating from and fitting ordinary hidden Markov models.
 }
 \seealso{
 Useful links:
