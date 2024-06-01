@@ -13,7 +13,13 @@ compute_P1_lhmm(para_P1)
 initial state probability vector of length \code{K}
 }
 \description{
-Compute initial state probability from LHMM parameters
+Compute initial state probability from LHMM parameters;
+currently, the initial state probability does not depend on latent traits
+}
+\examples{
+paras <- sim_lhmm_paras(5, 2)
+P1 <- compute_P1_lhmm(paras$para_P1)
+
 }
 \seealso{
 \code{\link{compute_PQ_lhmm}} for state-transition and state-action

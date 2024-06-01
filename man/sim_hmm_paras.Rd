@@ -22,3 +22,21 @@ If \code{return_prob = FALSE}, the element names are \code{para_P1}, \code{para_
 \code{sim_hmm_paras} generates logit scale parameters of HMM with \code{K} hidden states and
 \code{N} distinct actions from Uniform(-0.5, 0.5).
 }
+\examples{
+# generate probability parameters
+set.seed(12345)
+paras1 <- sim_hmm_paras(5, 2)
+names(paras1)
+
+# generate parameters in the logit scale
+set.seed(12345)
+paras2 <- sim_hmm_paras(5, 2, return_prob = FALSE)
+names(paras2)
+
+paras1$P1
+paras2$para_P1
+
+# logit scale parameters can be transformed to probability parameters
+all.equal(compute_paras_hmm(paras2$para_P, paras2$para_Q, paras2$para_P1), paras1)
+
+}

@@ -61,6 +61,15 @@ hmm_gr_fun <- function(paras, seqs, n, N, K) {
 #'   \code{opt_res} \tab object returned by \code{\link{optim}} \cr
 #'   }
 #'
+#' @examples
+#' # generate data
+#' paras_true <- sim_hmm_paras(5, 2)
+#' sim_data <- sim_hmm(20, paras_true, 4, 10)
+#' # randomly generate initial values of parameters
+#' paras_init <- sim_hmm_paras(5, 2, return_prob=FALSE)
+#' # fit hmm
+#' hmm_res <- hmm(sim_data$seqs, 2, paras_init)
+#'
 #' @export
 
 hmm <- function(action_seqs, K, paras, ...) {

@@ -11,6 +11,24 @@
 #' @return a list of three elements.
 #'   If \code{return_prob = TRUE}, the element names are \code{P1}, \code{P}, and \code{Q}.
 #'   If \code{return_prob = FALSE}, the element names are \code{para_P1}, \code{para_P}, and \code{oara_Q}.
+#'
+#' @examples
+#' # generate probability parameters
+#' set.seed(12345)
+#' paras1 <- sim_hmm_paras(5, 2)
+#' names(paras1)
+#'
+#' # generate parameters in the logit scale
+#' set.seed(12345)
+#' paras2 <- sim_hmm_paras(5, 2, return_prob = FALSE)
+#' names(paras2)
+#'
+#' paras1$P1
+#' paras2$para_P1
+#'
+#' # logit scale parameters can be transformed to probability parameters
+#' all.equal(compute_paras_hmm(paras2$para_P, paras2$para_Q, paras2$para_P1), paras1)
+#'
 #' @export
 sim_hmm_paras <- function(N, K, return_prob = TRUE) {
 
@@ -33,6 +51,10 @@ sim_hmm_paras <- function(N, K, return_prob = TRUE) {
 #' @inheritParams sim_hmm_paras
 #'
 #' @return a list of five elements, \code{para_a}, \code{para_b}, \code{para_alpha}, \code{para_beta}, and \code{para_P1}.
+#'
+#' @examples
+#' paras <- sim_lhmm_paras(5, 2)
+#' paras
 #'
 #' @export
 sim_lhmm_paras <- function(N, K) {
@@ -63,6 +85,10 @@ sim_lhmm_paras <- function(N, K) {
 #' @return \code{sim_hmm} returns a list of \code{n} generated action sequences if \code{return_state = FALSE}.
 #' If \code{return_state = TRUE}, it returns a list of two lists, \code{seqs} and \code{state_seqs}. \code{seqs} gives
 #' the generated action sequences. \code{state_seqs} gives the corresponding hidden state sequences.
+#'
+#' @examples
+#' paras <- sim_hmm_paras(5,2)
+#' sim_data <- sim_hmm(20, paras, 3, 10)
 #'
 #' @export
 sim_hmm <- function(n, paras, min_len, mean_len, return_state = TRUE) {
@@ -120,6 +146,10 @@ sim_hmm <- function(n, paras, min_len, mean_len, return_state = TRUE) {
 #' \code{state_seqs} \tab a list of \code{n} hidden state sequences
 #' }
 #' If \code{return_state = FALSE}, the returned list only contains \code{seqs} and \code{theta}.
+#'
+#' @examples
+#' paras <- sim_lhmm_paras(5,2)
+#' sim_data <- sim_lhmm(20, paras, 4, 10)
 #'
 #' @export
 sim_lhmm <- function(n, paras, min_len, mean_len, return_state = TRUE) {

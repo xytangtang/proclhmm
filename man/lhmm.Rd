@@ -45,3 +45,13 @@ Maximum marginalized likelihood estimation of LHMM.
 Marginalization over latent trait is computed numerically using Guassian-Hermite quadratures from \code{\link{statmod}}.
 Optimization is performed through \code{\link{optim}}.
 }
+\examples{
+# generate data
+paras_true <- sim_lhmm_paras(5, 2)
+sim_data <- sim_lhmm(20, paras_true, 3, 8)
+# randomly initialize parameters
+paras_init <- sim_lhmm_paras(5, 2)
+# fit model
+lhmm_res <- lhmm(sim_data$seqs, 2, paras_init)
+
+}

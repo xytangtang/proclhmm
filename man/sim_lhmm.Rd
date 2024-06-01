@@ -35,3 +35,8 @@ The lengths of the generated sequences are simulated from a Poission distributio
 mean \code{mean_len} and at least \code{min_len}. The latent trait is generated from standard
 normal.
 }
+\examples{
+paras <- sim_lhmm_paras(5,2)
+sim_data <- sim_lhmm(20, paras, 4, 10)
+
+}

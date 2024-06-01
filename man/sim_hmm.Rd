@@ -28,3 +28,8 @@ the generated action sequences. \code{state_seqs} gives the corresponding hidden
 The lengths of the generated sequences are simulated from a Poission distribution with
 mean \code{mean_len} and at least \code{min_len}.
 }
+\examples{
+paras <- sim_hmm_paras(5,2)
+sim_data <- sim_hmm(20, paras, 3, 10)
+
+}

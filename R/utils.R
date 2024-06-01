@@ -15,6 +15,11 @@
 #' }
 #' @seealso \code{\link{compute_P1_lhmm}} for initial state probabilities of
 #'   LHMM, \code{\link{compute_paras_hmm}} for computing probabilities in HMM.
+#'
+#' @examples
+#' paras <- sim_lhmm_paras(5, 2)
+#' prob_paras <- compute_PQ_lhmm(1.5, paras$para_a, paras$para_b, paras$para_alpha, paras$para_beta)
+#'
 #' @export
 compute_PQ_lhmm <- function(theta, para_a, para_b, para_alpha, para_beta) {
 	K <- nrow(para_a)
@@ -35,13 +40,19 @@ compute_PQ_lhmm <- function(theta, para_a, para_b, para_alpha, para_beta) {
 
 #' Compute LHMM probabilities from parameters
 #'
-#' Compute initial state probability from LHMM parameters
+#' Compute initial state probability from LHMM parameters;
+#' currently, the initial state probability does not depend on latent traits
 #'
 #' @inheritParams compute_theta
 #' @return initial state probability vector of length \code{K}
 #' @seealso \code{\link{compute_PQ_lhmm}} for state-transition and state-action
 #'   probabilities of LHMM, \code{\link{compute_paras_hmm}} for computing
 #'   probabilities in HMM.
+#'
+#' @examples
+#' paras <- sim_lhmm_paras(5, 2)
+#' P1 <- compute_P1_lhmm(paras$para_P1)
+#'
 #' @export
 compute_P1_lhmm <- function(para_P1) {
 	P1 <- c(0, para_P1)
@@ -94,6 +105,11 @@ deflate_paras_rehmm <- function(para_a, para_b, para_alpha, para_beta, para_P1) 
 #'   \tab \cr
 #' }
 #' @seealso \code{\link{compute_PQ_lhmm}}, \code{\link{compute_P1_lhmm}} for computing probabilities in LHMM
+#'
+#' @examples
+#' paras <- sim_hmm_paras(5, 2, return_prob=FALSE)
+#' prob_paras <- compute_paras_hmm(paras$para_P, paras$para_Q, paras$para_P1)
+#'
 #' @export
 compute_paras_hmm <- function(para_P, para_Q, para_P1) {
 	K <- nrow(para_P)

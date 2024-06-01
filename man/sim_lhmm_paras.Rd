@@ -18,3 +18,8 @@ a list of five elements, \code{para_a}, \code{para_b}, \code{para_alpha}, \code{
 \code{sim_hmm_paras} generates the parameters of LHMM with \code{K} hidden states
 and \code{N} distinct actions from Uniform(-0.5, 0.5).
 }
+\examples{
+paras <- sim_lhmm_paras(5, 2)
+paras
+
+}

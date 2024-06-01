@@ -27,6 +27,11 @@ a list of three elements:
 \description{
 Compute probabilities from logit scale parameters in HMM
 }
+\examples{
+paras <- sim_hmm_paras(5, 2, return_prob=FALSE)
+prob_paras <- compute_paras_hmm(paras$para_P, paras$para_Q, paras$para_P1)
+
+}
 \seealso{
 \code{\link{compute_PQ_lhmm}}, \code{\link{compute_P1_lhmm}} for computing probabilities in LHMM
 }

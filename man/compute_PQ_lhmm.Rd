@@ -30,6 +30,11 @@ A list of two elements
 Compute state-transition and state-action (emission) probability matrices
 from LHMM parameters
 }
+\examples{
+paras <- sim_lhmm_paras(5, 2)
+prob_paras <- compute_PQ_lhmm(1.5, paras$para_a, paras$para_b, paras$para_alpha, paras$para_beta)
+
+}
 \seealso{
 \code{\link{compute_P1_lhmm}} for initial state probabilities of
 LHMM, \code{\link{compute_paras_hmm}} for computing probabilities in HMM.

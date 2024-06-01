@@ -118,6 +118,15 @@ compute_theta <- function(int_seqs, para_a, para_b, para_alpha, para_beta, para_
 #'   \code{opt_res} \tab object returned by \code{\link{optim}} \cr
 #'   }
 #'
+#' @examples
+#' # generate data
+#' paras_true <- sim_lhmm_paras(5, 2)
+#' sim_data <- sim_lhmm(20, paras_true, 3, 8)
+#' # randomly initialize parameters
+#' paras_init <- sim_lhmm_paras(5, 2)
+#' # fit model
+#' lhmm_res <- lhmm(sim_data$seqs, 2, paras_init)
+#'
 #' @export
 #'
 
